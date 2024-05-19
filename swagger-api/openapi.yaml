@@ -452,7 +452,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Storage"
+                  $ref: "#/components/schemas/StorageWithList"
         404:
           $ref: "#/components/responses/404Error"
   /user/{token}/intems/{item-id}/take:
@@ -849,6 +849,26 @@ components:
         parentStorageId:
           type: integer
           format: int32
+        branchId:
+          type: integer
+          format: int32
+      required:
+        - id
+        - name
+        - branchId
+
+    StorageWithList:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        storages:
+          type: array
+          items:
+            $ref: "#/components/schemas/StorageWithList"
         branchId:
           type: integer
           format: int32
