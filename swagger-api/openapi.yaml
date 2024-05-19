@@ -102,19 +102,18 @@ paths:
                         format: uuid
         404:
           $ref: "#/components/responses/404Error"
-  /user/org/{org-id}/register-user:
+  /user/org/{token}/register-user:
     post:
       tags:
         - User
       summary: Регистрация пользователя в организации
       parameters:
-        - name: org-id
+        - name: token
           in: path
-          description: Идентификатор организации
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
       requestBody:
         description: Данные пользователя
         required: true
@@ -158,19 +157,18 @@ paths:
         404:
           $ref: "#/components/responses/404Error"
 
-  /user/{user-id}/change-password:
+  /user/{token}/change-password:
     post:
       tags:
         - User
       summary: Изменение пароля
       parameters:
-        - name: user-id
-          in: query
-          description: Идентификатор пользователя
+        - name: token
+          in: path
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
       requestBody:
         description: Данные пользователя
         required: true
@@ -230,19 +228,18 @@ paths:
         404:
           $ref: "#/components/responses/404Error"
 
-  /org/{org-id}/items/in-use:
+  /org/{token}/items/in-use:
     get:
       tags:
         - Item
       summary: Предметы в использовании
       parameters:
-        - name: org-id
+        - name: token
           in: path
-          description: Идентификатор организации
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
       responses:
         200:
           description: Метод успешно отработал
@@ -254,19 +251,18 @@ paths:
                   $ref: "#/components/schemas/Item"
         404:
           $ref: "#/components/responses/404Error"
-  /org/{org-id}/branches:
+  /org/{token}/branches:
     get:
       tags:
         - Branch
       summary: Ветки организации
       parameters:
-        - name: org-id
+        - name: token
           in: path
-          description: Идентификатор организации
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
       responses:
         200:
           description: Метод успешно отработал
@@ -307,20 +303,55 @@ paths:
                 format: int32
         404:
           $ref: "#/components/responses/404Error"
+  /org/{token}/branches/{branch-id}/storages:
+    post:
+      tags:
+        - Storage
+      summary: Создание склада
+      parameters:
+        - name: token
+          in: path
+          description: token организации
+          required: true
+          schema:
+            type: string
+        - name: branch-id
+          in: path
+          description: Идентификатор ветки
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Данные элемента страницы
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveStorage"
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          $ref: "#/components/responses/404Error"
 
-  /org/{org-id}/items:
+  /org/{token}/items:
     post:
       tags:
         - Item
       summary: Создание предмета
       parameters:
-        - name: org-id
+        - name: token
           in: path
-          description: Идентификатор организации
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
       requestBody:
         description: Данные элемента страницы
         required: true
@@ -338,19 +369,18 @@ paths:
                 format: int32
         404:
           $ref: "#/components/responses/404Error"
-  /org/{org-id}/items/search:
+  /org/{token}/items/search:
     get:
       tags:
         - Item
       summary: Поиск предметов
       parameters:
-        - name: org-id
+        - name: token
           in: path
-          description: Идентификатор организации
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: name
           in: query
           description: значение для поиска
@@ -368,19 +398,18 @@ paths:
                   $ref: "#/components/schemas/Item"
         404:
           $ref: "#/components/responses/404Error"
-  /org/{org-id}/branches/search:
+  /org/{token}/branches/search:
     get:
       tags:
         - Branch
       summary: Поиск хранилищ
       parameters:
-        - name: org-id
+        - name: token
           in: path
-          description: Идентификатор организации
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: name
           in: query
           description: значение для поиска
@@ -398,19 +427,18 @@ paths:
                   $ref: "#/components/schemas/Branch"
         404:
           $ref: "#/components/responses/404Error"
-  /user/{user-id}/intems/{item-id}/take:
+  /user/{token}/intems/{item-id}/take:
     post:
       tags:
         - Item
       summary: Взять предмет
       parameters:
-        - name: user-id
+        - name: token
           in: path
-          description: Идентификатор пользователя
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: item-id
           in: query
           description: Идентификатор предмета
@@ -440,19 +468,18 @@ paths:
                 format: int32
         404:
           $ref: "#/components/responses/404Error"
-  /user/{user-id}/intems/{item-id}/return:
+  /user/{token}/intems/{item-id}/return:
     post:
       tags:
         - Item
       summary: Вернуть предмет
       parameters:
-        - name: user-id
+        - name: token
           in: path
-          description: Идентификатор пользователя
+          description: token организации
           required: true
           schema:
-            type: integer
-            format: int32
+            type: string
         - name: item-id
           in: query
           description: Идентификатор предмета
@@ -578,6 +605,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Configuration"
+  /items/{item-id}:
+    get:
+      tags:
+        - Item
+      summary: Предмет
+      parameters:
+        - name: item-id
+          in: path
+          description: Идентификатор предмета
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
 #  /org/{org-id}/branches/
 
 components:
@@ -733,8 +780,8 @@ components:
         role:
           type: string
           enum:
-            - stuff
-            - user
+            - stockkeeper
+            - worker
         organizationId:
           type: integer
           format: int32
@@ -751,8 +798,8 @@ components:
         role:
           type: string
           enum:
-            - stuff
-            - user
+            - stockkeeper
+            - worker
       required:
         - phone
         - role
@@ -768,27 +815,16 @@ components:
           format: int32
         name:
           type: string
-        storages:
-          type: array
-          items:
-            $ref: "#/components/schemas/Storage"
-        branch:
-          $ref: "#/components/schemas/Branch"
-        capacity:
+        parentStorageId:
           type: integer
           format: int32
-        address:
-          type: string
-        frame:
+        branchId:
           type: integer
           format: int32
       required:
         - id
         - name
         - branchId
-        - capacity
-        - address
-        - frame
 
     SaveStorage:
       type: object
@@ -799,14 +835,6 @@ components:
           type: integer
           format: int32
         branchId:
-          type: integer
-          format: int32
-        capacity:
-          type: integer
-          format: int32
-        address:
-          type: string
-        frame:
           type: integer
           format: int32
       required:
@@ -828,7 +856,7 @@ components:
         photoLink:
           type: string
         category:
-          type: string
+          $ref: "#/components/schemas/Category"
         storage:
           $ref: "#/components/schemas/Storage"
         user:
@@ -839,12 +867,6 @@ components:
           type: string
         branch:
           $ref: "#/components/schemas/Branch"
-        qrImg:
-          type: string
-        categories:
-          type: array
-          items:
-            $ref: "#/components/schemas/Category"
       required:
         - id
         - name
@@ -858,10 +880,11 @@ components:
           type: string
         description:
           type: string
-        photoLink:
-          type: string
-        category:
-          type: string
+        photo:
+          $ref: "#/components/schemas/BinaryFile"
+        categoryId:
+          type: integer
+          format: int32
         storageId:
           type: integer
           format: int32
@@ -875,17 +898,8 @@ components:
         branchId:
           type: integer
           format: int32
-        qrImg:
-          type: string
-        categoryIds:
-          type: array
-          items:
-            type: integer
-            format: int32
       required:
         - name
-        - status
-        - status
     # ------ end user -----
 
     # ------- start conf -----
@@ -914,7 +928,7 @@ components:
         options:
           type: array
           items:
-            $ref: "#/components/schemas/Option"
+            $ref: "#/components/schemas/SaveOption"
       required:
         - code
         - name
@@ -975,90 +989,111 @@ components:
         id:
           type: integer
           format: int32
-        text:
-          type: string
         createdAt:
           type: string
           format: date
-        newStatus:
-          type: string
         item:
           $ref: "#/components/schemas/Item"
-        user:
-          $ref: "#/components/schemas/User"
-        actions:
-          type: array
-          items:
-            $ref: "#/components/schemas/Action"
         closedAt:
           type: string
           format: date
+        statusStart:
+          type: string
+        commentStart:
+          type: string
+        userStart:
+          $ref: "#/components/schemas/User"
+        statusEnd:
+          type: string
+        commentEnd:
+          type: string
+        userEnd:
+          $ref: "#/components/schemas/User"
+        Storage:
+          $ref: "#/components/schemas/Storage"
       required:
         - id
-        - text
         - createdAt
-        - newStatus
         - item
-        - user
+        - statusStart
+        - commentStart
+        - userStart
 
     SaveReport:
       type: object
       properties:
-        text:
+        createdAt:
           type: string
-        newStatus:
-          type: string
+          format: date
         itemId:
           type: integer
           format: int32
-        userId:
+        closedAt:
+          type: string
+          format: date
+        statusStart:
+          type: string
+        commentStart:
+          type: string
+        userStartId:
+          type: integer
+          format: int32
+        statusEnd:
+          type: string
+        commentEnd:
+          type: string
+        userEndId:
+          type: integer
+          format: int32
+        StorageId:
           type: integer
           format: int32
       required:
-        - text
-        - newStatus
+        - createdAt
         - itemId
-        - userId
+        - statusStart
+        - commentStart
+        - userStartId
 
     # ------ end reports ----
 
     # ------ start action ----
 
-    Action:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        name:
-          type: string
-        description:
-          type: string
-        report:
-          $ref: "#/components/schemas/Report"
-        date:
-          type: string
-          format: date
-      required:
-        - id
-        - name
-        - report
-        - date
-
-    SaveAction:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        reportId:
-          type: integer
-          format: int32
-      required:
-        - name
-        - description
-        - reportId
+#    Action:
+#      type: object
+#      properties:
+#        id:
+#          type: integer
+#          format: int32
+#        name:
+#          type: string
+#        description:
+#          type: string
+#        report:
+#          $ref: "#/components/schemas/Report"
+#        date:
+#          type: string
+#          format: date
+#      required:
+#        - id
+#        - name
+#        - report
+#        - date
+#
+#    SaveAction:
+#      type: object
+#      properties:
+#        name:
+#          type: string
+#        description:
+#          type: string
+#        reportId:
+#          type: integer
+#          format: int32
+#      required:
+#        - name
+#        - description
+#        - reportId
 
     # ------ end action ----
 
@@ -1072,10 +1107,6 @@ components:
           format: int32
         name:
           type: string
-        categories:
-          type: array
-          items:
-            $ref: "#/components/schemas/Category"
         conf:
           $ref: "#/components/schemas/Configuration"
       required:
@@ -1088,15 +1119,17 @@ components:
       properties:
         name:
           type: string
-        parentCategoryId:
-          type: integer
-          format: int32
         confId:
           type: integer
           format: int32
       required:
         - name
-        - parentCategoryId
+
+    BinaryFile:
+      type: string
+      format: binary
+      title: Файл
+      description: Загружаемый файл
 
     Sluggable:
       type: string
