@@ -279,13 +279,12 @@ paths:
         - Branch
       summary: Создание склада
       parameters:
-        - name: org-id
+        - name: token
           in: path
-          description: Идентификатор организации
+          description: token организации
           required: true
           schema:
             type: string
-            format: uuid
       requestBody:
         description: Данные элемента страницы
         required: true
@@ -402,7 +401,7 @@ paths:
     get:
       tags:
         - Branch
-      summary: Поиск хранилищ
+      summary: Поиск складов
       parameters:
         - name: token
           in: path
@@ -425,6 +424,35 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Branch"
+        404:
+          $ref: "#/components/responses/404Error"
+  /org/{token}/storages/search:
+    get:
+      tags:
+        - Branch
+      summary: Поиск хранилищ
+      parameters:
+        - name: token
+          in: path
+          description: token организации
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: значение для поиска
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Storage"
         404:
           $ref: "#/components/responses/404Error"
   /user/{token}/intems/{item-id}/take:
@@ -499,6 +527,9 @@ paths:
                   type: boolean
                 comment:
                   type: string
+                storageId:
+                  type: integer
+                  format: int32
       responses:
         200:
           description: Метод успешно отработал
