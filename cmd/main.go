@@ -4,6 +4,14 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	_ "github.com/lib/pq"
+	"github.com/pressly/goose/v3"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
+	"stocktacking_backend/internal/adapters/rest"
+	"stocktacking_backend/internal/infrastructure/env"
+	"stocktacking_backend/internal/infrastructure/registry"
+	"stocktacking_backend/internal/service/fixtures"
 )
 
 func main() {

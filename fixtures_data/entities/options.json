@@ -11,24 +11,32 @@
     "id": 2,
     "name": "Option 2",
     "code": "opt2",
-    "type": "number",
-    "value": "2",
+    "type": "boolean",
+    "value": "true",
     "conf_id": 2
   },
   {
     "id": 3,
     "name": "Option 3",
     "code": "opt3",
-    "type": "text",
-    "value": "Value 3",
-    "conf_id": 1
+    "type": "number",
+    "value": "123",
+    "conf_id": 3
   },
   {
     "id": 4,
     "name": "Option 4",
     "code": "opt4",
-    "type": "number",
-    "value": "4",
-    "conf_id": 2
+    "type": "select",
+    "value": "option1",
+    "conf_id": 4
+  },
+  {
+    "id": 5,
+    "name": "Option 5",
+    "code": "opt5",
+    "type": "textarea",
+    "value": "Lorem ipsum dolor sit amet",
+    "conf_id": 5
   }
 ]

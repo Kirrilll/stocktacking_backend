@@ -468,7 +468,7 @@ paths:
           schema:
             type: string
         - name: item-id
-          in: query
+          in: path
           description: Идентификатор предмета
           required: true
           schema:
@@ -509,7 +509,7 @@ paths:
           schema:
             type: string
         - name: item-id
-          in: query
+          in: path
           description: Идентификатор предмета
           required: true
           schema:
@@ -1110,41 +1110,41 @@ components:
 
     # ------ start action ----
 
-#    Action:
-#      type: object
-#      properties:
-#        id:
-#          type: integer
-#          format: int32
-#        name:
-#          type: string
-#        description:
-#          type: string
-#        report:
-#          $ref: "#/components/schemas/Report"
-#        date:
-#          type: string
-#          format: date
-#      required:
-#        - id
-#        - name
-#        - report
-#        - date
-#
-#    SaveAction:
-#      type: object
-#      properties:
-#        name:
-#          type: string
-#        description:
-#          type: string
-#        reportId:
-#          type: integer
-#          format: int32
-#      required:
-#        - name
-#        - description
-#        - reportId
+    #    Action:
+    #      type: object
+    #      properties:
+    #        id:
+    #          type: integer
+    #          format: int32
+    #        name:
+    #          type: string
+    #        description:
+    #          type: string
+    #        report:
+    #          $ref: "#/components/schemas/Report"
+    #        date:
+    #          type: string
+    #          format: date
+    #      required:
+    #        - id
+    #        - name
+    #        - report
+    #        - date
+    #
+    #    SaveAction:
+    #      type: object
+    #      properties:
+    #        name:
+    #          type: string
+    #        description:
+    #          type: string
+    #        reportId:
+    #          type: integer
+    #          format: int32
+    #      required:
+    #        - name
+    #        - description
+    #        - reportId
 
     # ------ end action ----
 

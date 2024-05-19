@@ -1,22 +1,27 @@
 [
   {
     "id": 1,
-    "code": "conf1",
+    "code": "config_code_1",
     "name": "Configuration 1"
   },
   {
     "id": 2,
-    "code": "conf2",
+    "code": "config_code_2",
     "name": "Configuration 2"
   },
   {
     "id": 3,
-    "code": "conf3",
+    "code": "config_code_3",
     "name": "Configuration 3"
   },
   {
     "id": 4,
-    "code": "conf4",
+    "code": "config_code_4",
     "name": "Configuration 4"
+  },
+  {
+    "id": 5,
+    "code": "config_code_5",
+    "name": "Configuration 5"
   }
 ]

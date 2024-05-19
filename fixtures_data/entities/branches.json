@@ -30,5 +30,13 @@
     "address": "Address 4",
     "lat": "45.678901",
     "lon": "91.234567"
+  },
+  {
+    "id": 5,
+    "name": "Branch 5",
+    "organization_id": 5,
+    "address": "Address 5",
+    "lat": "56.789012",
+    "lon": "92.345678"
   }
 ]

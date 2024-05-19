@@ -2,25 +2,26 @@
   {
     "id": 1,
     "name": "Category 1",
-    "parent_category_id": null,
     "conf_id": 1
   },
   {
     "id": 2,
     "name": "Category 2",
-    "parent_category_id": 1,
-    "conf_id": 1
+    "conf_id": 2
   },
   {
     "id": 3,
     "name": "Category 3",
-    "parent_category_id": null,
-    "conf_id": 1
+    "conf_id": 3
   },
   {
     "id": 4,
     "name": "Category 4",
-    "parent_category_id": 3,
-    "conf_id": 1
+    "conf_id": 4
+  },
+  {
+    "id": 5,
+    "name": "Category 5",
+    "conf_id": 5
   }
 ]
