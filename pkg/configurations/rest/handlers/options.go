@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"net/http"
 	"stocktacking_backend/pkg/configurations/plugin/actions"
 	"stocktacking_backend/pkg/configurations/rest/services"
 	"stocktacking_backend/pkg/services/errors"
+	"strconv"
 )
 
 // OptionsHandler обработчик запросов к настройкам
@@ -30,7 +30,7 @@ func NewOptionsHandler(
 func (h OptionsHandler) List(c *gin.Context) {
 	dto := actions.ListOptions{}
 	stringConfId := c.Param(ConfigurationIdParam)
-	confId, err := uuid.Parse(stringConfId)
+	confId, err := strconv.Atoi(stringConfId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
@@ -65,7 +65,7 @@ func (h OptionsHandler) List(c *gin.Context) {
 // Create создание настройки
 func (h OptionsHandler) Create(c *gin.Context) {
 	stringConfId := c.Param(ConfigurationIdParam)
-	confId, err := uuid.Parse(stringConfId)
+	confId, err := strconv.Atoi(stringConfId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
@@ -105,7 +105,7 @@ func (h OptionsHandler) UpdateList(c *gin.Context) {
 	}
 
 	stringConfId := c.Param(ConfigurationIdParam)
-	confId, err := uuid.Parse(stringConfId)
+	confId, err := strconv.Atoi(stringConfId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
@@ -130,14 +130,14 @@ func (h OptionsHandler) UpdateList(c *gin.Context) {
 // Get получение настройки
 func (h OptionsHandler) Get(c *gin.Context) {
 	stringId := c.Param(OptionIdParam)
-	optId, err := uuid.Parse(stringId)
+	optId, err := strconv.Atoi(stringId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
 	}
 
 	stringConfId := c.Param(ConfigurationIdParam)
-	confId, err := uuid.Parse(stringConfId)
+	confId, err := strconv.Atoi(stringConfId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
@@ -163,14 +163,14 @@ func (h OptionsHandler) Get(c *gin.Context) {
 // Update обновление настройки
 func (h OptionsHandler) Update(c *gin.Context) {
 	stringOptId := c.Param(OptionIdParam)
-	optId, err := uuid.Parse(stringOptId)
+	optId, err := strconv.Atoi(stringOptId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
 	}
 
 	stringConfId := c.Param(ConfigurationIdParam)
-	confId, err := uuid.Parse(stringConfId)
+	confId, err := strconv.Atoi(stringConfId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
@@ -204,14 +204,14 @@ func (h OptionsHandler) Update(c *gin.Context) {
 // Delete удаление настройки
 func (h OptionsHandler) Delete(c *gin.Context) {
 	stringOptId := c.Param(OptionIdParam)
-	optId, err := uuid.Parse(stringOptId)
+	optId, err := strconv.Atoi(stringOptId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
 	}
 
 	stringConfId := c.Param(ConfigurationIdParam)
-	confId, err := uuid.Parse(stringConfId)
+	confId, err := strconv.Atoi(stringConfId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return

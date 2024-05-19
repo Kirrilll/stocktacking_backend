@@ -4,31 +4,34 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"stocktacking_backend/internal/adapters/rest/handlers"
+	"stocktacking_backend/pkg/configurations/rest"
 )
 
 type Router struct {
-	ginMode         string
-	apiSettings     APISettings
-	fixturesHandler *handlers.FixturesHandler
-	//mediaHandler *
+	ginMode              string
+	apiSettings          APISettings
+	fixturesHandler      *handlers.FixturesHandler
+	configurationsRouter *rest.Router
 }
 
 type APISettings struct {
 	Root        string
 	Version     string
 	ServiceName string
-	//PkgPath     string
+	PkgPath     string
 }
 
 func NewRouter(
 	ginMode string,
 	apiSettings APISettings,
 	fixturesHandler *handlers.FixturesHandler,
+	configurationsRouter *rest.Router,
 ) *Router {
 	return &Router{
-		ginMode:         ginMode,
-		apiSettings:     apiSettings,
-		fixturesHandler: fixturesHandler,
+		ginMode:              ginMode,
+		apiSettings:          apiSettings,
+		fixturesHandler:      fixturesHandler,
+		configurationsRouter: configurationsRouter,
 	}
 }
 
@@ -62,6 +65,10 @@ func (r Router) Router() *gin.Engine {
 
 	api := router.Group(r.apiSettings.Root)
 	v1 := api.Group(r.apiSettings.Version)
+
+	focus := v1.Group(r.apiSettings.PkgPath)
+	focus.Group("health").Group("check").GET("", healthCheck)
+	r.configurationsRouter.SetRoutes(focus)
 
 	// internal
 	service := v1.Group(r.apiSettings.ServiceName)

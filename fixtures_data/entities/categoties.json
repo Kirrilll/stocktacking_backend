@@ -2,26 +2,26 @@
   {
     "id": 1,
     "name": "Category 1",
-    "conf_id": 1
+    "confId": 1
   },
   {
     "id": 2,
     "name": "Category 2",
-    "conf_id": 2
+    "confId": 2
   },
   {
     "id": 3,
     "name": "Category 3",
-    "conf_id": 3
+    "confId": 3
   },
   {
     "id": 4,
     "name": "Category 4",
-    "conf_id": 4
+    "confId": 4
   },
   {
     "id": 5,
     "name": "Category 5",
-    "conf_id": 5
+    "confId": 5
   }
 ]

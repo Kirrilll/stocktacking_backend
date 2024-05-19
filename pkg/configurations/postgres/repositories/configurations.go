@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/google/uuid"
 	stackedErrors "github.com/pkg/errors"
 	"gorm.io/gorm"
 	"stocktacking_backend/pkg/configurations/plugin/actions"
@@ -22,7 +21,7 @@ func NewConfigurationRepository(db *gorm.DB) actions.ConfigurationsRepository {
 }
 
 // Get получение конфигурации по id
-func (r confRepository) Get(ctx context.Context, Id uuid.UUID) (*entity.Configuration, error) {
+func (r confRepository) Get(ctx context.Context, Id int) (*entity.Configuration, error) {
 	confEntity := &entity.Configuration{}
 	err := r.db.WithContext(ctx).
 		First(confEntity, Id).Error
@@ -37,7 +36,7 @@ func (r confRepository) Get(ctx context.Context, Id uuid.UUID) (*entity.Configur
 }
 
 // Has проверка существования конфигурации по id
-func (r confRepository) Has(ctx context.Context, id uuid.UUID) bool {
+func (r confRepository) Has(ctx context.Context, id int) bool {
 	err := r.db.WithContext(ctx).
 		Select("id").
 		First(&entity.Configuration{}, "id = ?", id).
@@ -51,7 +50,7 @@ func (r confRepository) HasByCode(ctx context.Context, code string) bool {
 	db := r.db
 	confEntity := &entity.Configuration{}
 	db.WithContext(ctx).First(confEntity, "code = ?", code)
-	return confEntity.Id != uuid.Nil
+	return confEntity.Id != 0
 }
 
 // Create создание конфигурации
@@ -81,7 +80,7 @@ func (r confRepository) FindByCode(ctx context.Context, code string) (*entity.Co
 }
 
 // Delete удаление конфигурации
-func (r confRepository) Delete(ctx context.Context, Id uuid.UUID) error {
+func (r confRepository) Delete(ctx context.Context, Id int) error {
 	err := r.db.WithContext(ctx).Delete(&entity.Configuration{Id: Id}).Error
 	return stackedErrors.WithStack(err)
 }

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "code": "tech-banner",
+    "name": "Технический баннер"
+  },
+  {
+    "id": 2,
+    "code": "default_location",
+    "name": "Локация по-умолчанию"
+  },
+  {
+    "id": 3,
+    "code": "mobile",
+    "name": "Мобильные приложения"
+  },
+  {
+    "id": 4,
+    "code": "layout",
+    "name": "Шапка и подвал"
+  },
+  {
+    "id": 5,
+    "code": "footer",
+    "name": "Подвал"
+  },
+  {
+    "id": 6,
+    "code": "header",
+    "name": "Шапка"
+  },
+  {
+    "id": 7,
+    "code": "policy",
+    "name": "Политика"
+  }
+]

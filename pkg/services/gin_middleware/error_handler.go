@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"bnssite/pkg/services/errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"stocktacking_backend/pkg/services/errors"
 )
 
 var (

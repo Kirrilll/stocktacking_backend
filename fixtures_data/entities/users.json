@@ -4,34 +4,34 @@
     "name": "John Doe",
     "role": "worker",
     "phone": "123-456-7890",
-    "organization_id": 1
+    "organizationId": 1
   },
   {
     "id": 2,
     "name": "Jane Smith",
     "role": "worker",
     "phone": "987-654-3210",
-    "organization_id": 2
+    "organizationId": 2
   },
   {
     "id": 3,
     "name": "Bob Johnson",
     "role": "worker",
     "phone": "555-555-5555",
-    "organization_id": 3
+    "organizationId": 3
   },
   {
     "id": 4,
     "name": "Alice Brown",
     "role": "stockkeeper",
     "phone": "444-444-4444",
-    "organization_id": 4
+    "organizationId": 4
   },
   {
     "id": 5,
     "name": "Mike Davis",
     "role": "stockkeeper",
     "phone": "333-333-3333",
-    "organization_id": 5
+    "organizationId": 4
   }
 ]

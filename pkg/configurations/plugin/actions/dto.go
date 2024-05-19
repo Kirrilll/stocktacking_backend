@@ -1,7 +1,6 @@
 package actions
 
 import (
-	"github.com/google/uuid"
 	"stocktacking_backend/pkg/configurations/plugin/entity"
 )
 
@@ -11,13 +10,13 @@ type CreateConfiguration struct {
 }
 
 type GetConfiguration struct {
-	Id uuid.UUID `json:"id" validate:"required,notBlank"`
+	Id int `json:"id" validate:"required,notBlank"`
 }
 
 type UpdateConfiguration struct {
-	Id   uuid.UUID `json:"id" validate:"required,notBlank"`
-	Code string    `json:"code" validate:"required"`
-	Name string    `json:"name" validate:"required,notBlank,min=3,max=50"`
+	Id   int    `json:"id" validate:"required,notBlank"`
+	Code string `json:"code" validate:"required"`
+	Name string `json:"name" validate:"required,notBlank,min=3,max=50"`
 }
 
 type ListConfigurations struct {
@@ -29,28 +28,28 @@ type ListConfigurations struct {
 }
 
 type CreateOption struct {
-	ConfId uuid.UUID `json:"confId" validate:"required,notBlank"`
-	Code   string    `json:"code" validate:"required,min=3,max=50,sluggable"`
-	Name   string    `json:"name" validate:"required,notBlank,min=3,max=50"`
-	Type   string    `json:"type" validate:"required,oneof=string text integer checkbox file image datetime date"`
+	ConfId int    `json:"confId" validate:"required,notBlank"`
+	Code   string `json:"code" validate:"required,min=3,max=50,sluggable"`
+	Name   string `json:"name" validate:"required,notBlank,min=3,max=50"`
+	Type   string `json:"type" validate:"required,oneof=string text integer checkbox file image datetime date"`
 }
 
 type UpdateOption struct {
-	Id     uuid.UUID `json:"id" validate:"required,notBlank"`
-	ConfId uuid.UUID `json:"confId" validate:"required,notBlank"`
-	Code   string    `json:"code" validate:"required"`
-	Name   string    `json:"name" validate:"required,notBlank,min=3,max=50"`
-	Type   string    `json:"type" validate:"required,oneof=string text integer checkbox file image datetime date"`
+	Id     int    `json:"id" validate:"required,notBlank"`
+	ConfId int    `json:"confId" validate:"required,notBlank"`
+	Code   string `json:"code" validate:"required"`
+	Name   string `json:"name" validate:"required,notBlank,min=3,max=50"`
+	Type   string `json:"type" validate:"required,oneof=string text integer checkbox file image datetime date"`
 }
 
 type UpdateOptionsList struct {
 	Items  []entity.OptionShort `json:"items" validate:"required,min=1,unique=Code"`
-	ConfId uuid.UUID            `json:"confId" validate:"required,notBlank"`
+	ConfId int                  `json:"confId" validate:"required,notBlank"`
 }
 
 type GetOption struct {
-	Id     uuid.UUID `json:"id" validate:"required,notBlank"`
-	ConfId uuid.UUID `json:"confId" validate:"required,notBlank"`
+	Id     int `json:"id" validate:"required,notBlank"`
+	ConfId int `json:"confId" validate:"required,notBlank"`
 }
 
 type ListOptionsPreviews struct {
@@ -59,9 +58,9 @@ type ListOptionsPreviews struct {
 }
 
 type ListOptions struct {
-	ConfId uuid.UUID `json:"confId" validate:"required,notBlank"`
-	Offset int       `json:"offset" validate:"min=0"`
-	Limit  int       `json:"limit" validate:"required,min=10,max=100"`
-	Sort   string    `json:"sort"`
-	Order  string    `json:"order" validate:"omitempty,oneof=asc desc"`
+	ConfId int    `json:"confId" validate:"required,notBlank"`
+	Offset int    `json:"offset" validate:"min=0"`
+	Limit  int    `json:"limit" validate:"required,min=10,max=100"`
+	Sort   string `json:"sort"`
+	Order  string `json:"order" validate:"omitempty,oneof=asc desc"`
 }

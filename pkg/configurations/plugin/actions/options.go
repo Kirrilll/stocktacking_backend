@@ -62,7 +62,7 @@ func (o Options) Create(ctx context.Context, action CreateOption) (*uuid.UUID, e
 
 	newId := uuid.New()
 	option := entity.Option{
-		Id:     newId,
+		//Id:     newId,
 		ConfId: action.ConfId,
 		Code:   action.Code,
 		Name:   action.Name,
@@ -228,21 +228,21 @@ func (o Options) checkValueType(ctx context.Context, optType string, optValue st
 	case "checkbox":
 		_, err := strconv.ParseBool(optValue)
 		return err
-	case "file", "image":
-		if o.mediaService == nil {
-			return ErrMediaPluginIsNotImported
-		}
-
-		if optValue != "" {
-			mediaId, err := uuid.Parse(optValue)
-			if err != nil {
-				return errors.BadRequest.Wrap(err, "value must be a valid uuid or nil")
-			}
-			err = o.mediaService.CheckIds(ctx, mediaId)
-			if err != nil {
-				return errors.BadRequest.Wrap(err, "error checking media ids")
-			}
-		}
+	//case "file", "image":
+	//	if o.mediaService == nil {
+	//		return ErrMediaPluginIsNotImported
+	//	}
+	//
+	//	if optValue != "" {
+	//		//mediaId, err := uuid.Parse(optValue)
+	//		if err != nil {
+	//			return errors.BadRequest.Wrap(err, "value must be a valid uuid or nil")
+	//		}
+	//		err = o.mediaService.CheckIds(ctx, mediaId)
+	//		if err != nil {
+	//			return errors.BadRequest.Wrap(err, "error checking media ids")
+	//		}
+	//	}
 	case "datetime", "date":
 		if optValue == "" {
 			return nil

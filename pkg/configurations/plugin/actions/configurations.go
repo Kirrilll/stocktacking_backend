@@ -29,7 +29,7 @@ func (c Configurations) Create(ctx context.Context, action CreateConfiguration) 
 	}
 
 	newId := uuid.New()
-	configuration := entity.Configuration{Id: newId, Code: action.Code, Name: action.Name}
+	configuration := entity.Configuration{Code: action.Code, Name: action.Name}
 	err := c.confRepository.Create(ctx, configuration)
 	if err != nil {
 		return uuid.Nil, err

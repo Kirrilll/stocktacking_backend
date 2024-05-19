@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"net/http"
 	"stocktacking_backend/pkg/configurations/plugin/actions"
 	"stocktacking_backend/pkg/configurations/rest/services"
 	"stocktacking_backend/pkg/services/errors"
+	"strconv"
 )
 
 // ConfigurationsHandler обработчик запросов к конфигурациям
@@ -83,7 +83,7 @@ func (h ConfigurationsHandler) Create(c *gin.Context) {
 func (h ConfigurationsHandler) Get(c *gin.Context) {
 	action := actions.GetConfiguration{}
 	stringId := c.Param(ConfigurationIdParam)
-	id, err := uuid.Parse(stringId)
+	id, err := strconv.Atoi(stringId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
@@ -110,7 +110,7 @@ func (h ConfigurationsHandler) Update(c *gin.Context) {
 	}
 
 	stringId := c.Param(ConfigurationIdParam)
-	dto.Id, err = uuid.Parse(stringId)
+	dto.Id, err = strconv.Atoi(stringId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return
@@ -135,7 +135,7 @@ func (h ConfigurationsHandler) Update(c *gin.Context) {
 func (h ConfigurationsHandler) Delete(c *gin.Context) {
 	action := actions.GetConfiguration{}
 	stringId := c.Param(ConfigurationIdParam)
-	id, err := uuid.Parse(stringId)
+	id, err := strconv.Atoi(stringId)
 	if err != nil {
 		_ = c.Error(errors.BadRequest.Wrap(err, "uuid parsing error"))
 		return

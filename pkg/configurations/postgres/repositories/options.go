@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/google/uuid"
 	stackedErrors "github.com/pkg/errors"
 	"gorm.io/gorm"
 	"stocktacking_backend/pkg/configurations/plugin/actions"
@@ -21,7 +20,7 @@ func NewOptionsRepository(db *gorm.DB) actions.OptionsRepository {
 }
 
 // Has проверка существования настройки по id
-func (r optionRepository) Has(ctx context.Context, confId uuid.UUID, optId uuid.UUID) bool {
+func (r optionRepository) Has(ctx context.Context, confId int, optId int) bool {
 	err := r.db.WithContext(ctx).
 		Select("options.id").
 		Where("options.conf_id = ?", confId).
@@ -32,7 +31,7 @@ func (r optionRepository) Has(ctx context.Context, confId uuid.UUID, optId uuid.
 }
 
 // HasByCode проверка существования настройки по коду
-func (r optionRepository) HasByCode(ctx context.Context, confId uuid.UUID, optCodes ...string) bool {
+func (r optionRepository) HasByCode(ctx context.Context, confId int, optCodes ...string) bool {
 	err := r.db.WithContext(ctx).
 		Select("options.id").
 		Where("options.conf_id = ?", confId).
@@ -43,7 +42,7 @@ func (r optionRepository) HasByCode(ctx context.Context, confId uuid.UUID, optCo
 }
 
 // Get получение настройки по id
-func (r optionRepository) Get(ctx context.Context, id uuid.UUID) (*entity.Option, error) {
+func (r optionRepository) Get(ctx context.Context, id int) (*entity.Option, error) {
 	opt := &entity.Option{}
 	err := r.db.WithContext(ctx).
 		Where("id = ?", id).
@@ -76,7 +75,7 @@ func (r optionRepository) Update(ctx context.Context, opt ...entity.Option) erro
 }
 
 // Delete удаление настройки
-func (r optionRepository) Delete(ctx context.Context, optId uuid.UUID) error {
+func (r optionRepository) Delete(ctx context.Context, optId int) error {
 	err := r.db.WithContext(ctx).Delete(&entity.Option{Id: optId}).Error
 	if err != nil {
 		return stackedErrors.WithStack(err)
@@ -146,7 +145,7 @@ func (r optionRepository) Count(ctx context.Context, filter actions.OptionsFilte
 }
 
 func (optionRepository) filterOpt(db *gorm.DB, filter actions.OptionsFilter) *gorm.DB {
-	if filter.ConfId != uuid.Nil {
+	if filter.ConfId != 0 {
 		db = db.Where("options.conf_id = ?", filter.ConfId)
 	}
 	if filter.ConfCode != "" {

@@ -3,4 +3,4 @@ goose-up:
 goose-down:
 	goose postgres "user=postgres password=postgres dbname=demo sslmode=disable" down
 goose-makefile:
-	goose create init sql
+	goose create address sql

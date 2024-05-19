@@ -21,7 +21,7 @@ func (BranchFixture) GetEntity() any {
 }
 
 func (f BranchFixture) FixturesData() (any, error) {
-	jsonFile, err := os.Open("fixtures_data/entities/branches.json ")
+	jsonFile, err := os.Open("fixtures_data/entities/branches.json")
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (StorageFixture) GetEntity() any {
 }
 
 func (f StorageFixture) FixturesData() (any, error) {
-	jsonFile, err := os.Open("fixtures_data/product/carts.json")
+	jsonFile, err := os.Open("fixtures_data/entities/storages.json")
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +238,7 @@ func (ConfigurationFixture) GetEntity() any {
 }
 
 func (f ConfigurationFixture) FixturesData() (any, error) {
-	jsonFile, err := os.Open("fixtures_data/entities/conf.json")
+	jsonFile, err := os.Open("fixtures_data/entities/configurations.json")
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +269,7 @@ func (OptionFixture) GetEntity() any {
 }
 
 func (f OptionFixture) FixturesData() (any, error) {
-	jsonFile, err := os.Open("fixtures_data/entities/conf.json")
+	jsonFile, err := os.Open("fixtures_data/entities/options.json")
 	if err != nil {
 		return nil, err
 	}

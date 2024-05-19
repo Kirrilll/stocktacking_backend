@@ -15,6 +15,7 @@ import (
 	"stocktacking_backend/internal/infrastructure/registry/services_definitions"
 	"stocktacking_backend/internal/service"
 	"stocktacking_backend/internal/service/fixtures"
+	rest2 "stocktacking_backend/pkg/configurations/rest"
 	"time"
 )
 
@@ -61,9 +62,9 @@ func NewContainer() (*Container, error) {
 	//if err = builder.Add(services_definitions.MenuDefinitions...); err != nil {
 	//	return nil, err
 	//}
-	//if err = builder.Add(services_definitions.PkgDefinitions...); err != nil {
-	//	return nil, err
-	//}
+	if err = builder.Add(services_definitions.PkgDefinitions...); err != nil {
+		return nil, err
+	}
 
 	//if err = builder.Add(services_definitions.MailTemplatesDefinitions...); err != nil {
 	//	return nil, err
@@ -116,13 +117,13 @@ var definitions = []di.Def{
 			return service.Copier{}, nil
 		},
 	},
-	//{
-	//	Name: "focus.db",
-	//	Build: func(ctn di.Container) (interface{}, error) {
-	//		db := ctn.Get("db").(*gorm.DB)
-	//		return db, nil
-	//	},
-	//},
+	{
+		Name: "focus.db",
+		Build: func(ctn di.Container) (interface{}, error) {
+			db := ctn.Get("db").(*gorm.DB)
+			return db, nil
+		},
+	},
 	{
 		Name: "db", // Database
 		Build: func(ctn di.Container) (interface{}, error) {
@@ -177,6 +178,7 @@ var definitions = []di.Def{
 		Build: func(ctn di.Container) (interface{}, error) {
 			logger := ctn.Get("logger").(*zap.SugaredLogger)
 			fixturesHandler := ctn.Get("fixturesHandler").(*handlers.FixturesHandler)
+			configurationsRouter := ctn.Get("focus.configurations.router").(*rest2.Router)
 			logger.Info("building router")
 
 			router := rest.NewRouter(
@@ -185,8 +187,10 @@ var definitions = []di.Def{
 					Root:        env.HTTPApiRoot,
 					Version:     env.HTTPApiVersion,
 					ServiceName: env.HTTPApiServiceName,
+					PkgPath:     env.HTTPApiPkgPath,
 				},
 				fixturesHandler,
+				configurationsRouter,
 			)
 			logger.Info("router has built")
 			return router, nil

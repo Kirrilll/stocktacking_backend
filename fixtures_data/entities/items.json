@@ -3,60 +3,60 @@
     "id": 1,
     "name": "Item 1",
     "description": "Description for Item 1",
-    "photo_link": "https://example.com/item1.jpg",
-    "storage_id": 1,
-    "user_id": 1,
+    "photoLink": "https://example.com/item1.jpg",
+    "storageId": 1,
+    "userId": 1,
     "comment": "Comment for Item 1",
     "status": "In Use",
-    "category_id": 1,
-    "branch_id": 1
+    "categoryId": 1,
+    "branchId": 1
   },
   {
     "id": 2,
     "name": "Item 2",
     "description": "Description for Item 2",
-    "photo_link": "https://example.com/item2.jpg",
-    "storage_id": 2,
-    "user_id": 2,
+    "photoLink": "https://example.com/item2.jpg",
+    "storageId": 2,
+    "userId": 2,
     "comment": "Comment for Item 2",
     "status": "In Use",
-    "category_id": 2,
-    "branch_id": 1
+    "categoryId": 2,
+    "branchId": 1
   },
   {
     "id": 3,
     "name": "Item 3",
     "description": "Description for Item 3",
-    "photo_link": "https://example.com/item3.jpg",
-    "storage_id": 3,
-    "user_id": 3,
+    "photoLink": "https://example.com/item3.jpg",
+    "storageId": 3,
+    "userId": 3,
     "comment": "Comment for Item 3",
     "status": "In Use",
-    "category_id": 3,
-    "branch_id": 2
+    "categoryId": 3,
+    "branchId": 2
   },
   {
     "id": 4,
     "name": "Item 4",
     "description": "Description for Item 4",
-    "photo_link": "https://example.com/item4.jpg",
-    "storage_id": 4,
-    "user_id": 4,
+    "photoLink": "https://example.com/item4.jpg",
+    "storageId": 4,
+    "userId": 4,
     "comment": "Comment for Item 4",
     "status": "In Use",
-    "category_id": 4,
-    "branch_id": 2
+    "categoryId": 4,
+    "branchId": 2
   },
   {
     "id": 5,
     "name": "Item 5",
     "description": "Description for Item 5",
-    "photo_link": "https://example.com/item5.jpg",
-    "storage_id": 5,
-    "user_id": 5,
+    "photoLink": "https://example.com/item5.jpg",
+    "storageId": 5,
+    "userId": 5,
     "comment": "Comment for Item 5",
     "status": "In Use",
-    "category_id": 1,
-    "branch_id": 1
+    "categoryId": 1,
+    "branchId": 1
   }
 ]

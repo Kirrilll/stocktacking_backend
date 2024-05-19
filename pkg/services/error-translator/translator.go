@@ -1,8 +1,8 @@
 package et
 
 import (
-	"bnssite/pkg/services/errors"
 	ut "github.com/go-playground/universal-translator"
+	"stocktacking_backend/pkg/services/errors"
 )
 
 type Translator struct {
