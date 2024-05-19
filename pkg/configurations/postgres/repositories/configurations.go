@@ -3,7 +3,6 @@ package repositories
 import (
 	"context"
 	"errors"
-	"fmt"
 	stackedErrors "github.com/pkg/errors"
 	"gorm.io/gorm"
 	"stocktacking_backend/pkg/configurations/plugin/actions"
@@ -91,20 +90,20 @@ func (r confRepository) List(ctx context.Context, dto actions.ConfigurationsList
 ) {
 	var confEntityList = make([]entity.Configuration, 0)
 
-	sort := dto.Sort
-	if sort == "" {
-		sort = "updated_at"
-	}
-	order := dto.Order
-	if order == "" {
-		order = "desc"
-	}
+	//sort := dto.Sort
+	//if sort == "" {
+	//	sort = "updated_at"
+	//}
+	//order := dto.Order
+	//if order == "" {
+	//	order = "desc"
+	//}
 
 	db := r.db.WithContext(ctx)
 	db = filterConf(db, dto.Filter)
 	err := db.
 		Limit(dto.Limit).Offset(dto.Offset).
-		Order(fmt.Sprintf("%s %s", sort, order)).
+		//Order(fmt.Sprintf("%s %s", sort, order)).
 		Find(&confEntityList).Error
 	if err != nil {
 		return nil, stackedErrors.WithStack(err)
