@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "code": "conf1",
+    "name": "Configuration 1"
+  },
+  {
+    "id": 2,
+    "code": "conf2",
+    "name": "Configuration 2"
+  },
+  {
+    "id": 3,
+    "code": "conf3",
+    "name": "Configuration 3"
+  },
+  {
+    "id": 4,
+    "code": "conf4",
+    "name": "Configuration 4"
+  }
+]

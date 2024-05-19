@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Organization 1",
+    "phone": "1234567890",
+    "inn": "1234567890"
+  },
+  {
+    "id": 2,
+    "name": "Organization 2",
+    "phone": "0987654321",
+    "inn": "0987654321"
+  },
+  {
+    "id": 3,
+    "name": "Organization 3",
+    "phone": "3216549870",
+    "inn": "3216549870"
+  },
+  {
+    "id": 4,
+    "name": "Organization 4",
+    "phone": "0123456789",
+    "inn": "0123456789"
+  }
+]

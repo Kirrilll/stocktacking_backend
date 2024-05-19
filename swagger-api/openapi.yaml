@@ -1,0 +1,1197 @@
+openapi: 3.0.0
+info:
+  title: Сервис content App
+  description: Сервис для работы с
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/api/v1/stocktack
+    description: Staging server V1
+
+paths:
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: Авторизация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Успешная авторизация
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - admin
+                      - user
+                  profile:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      phone:
+                        type: string
+                      id:
+                        type: string
+                        format: uuid
+        '404':
+          $ref: '#/components/responses/404Error'
+
+  /user/org/login:
+    post:
+      tags:
+        - User
+      summary: Авторизация организации
+      requestBody:
+        description: Данные элемента страницы
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+                inn:
+                  type: string
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                  role:
+                    type: string
+                    enum:
+                      - org
+                  profile:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      phone:
+                        type: string
+                      id:
+                        type: string
+                        format: uuid
+        404:
+          $ref: "#/components/responses/404Error"
+  /user/org/{org-id}/register-user:
+    post:
+      tags:
+        - User
+      summary: Регистрация пользователя в организации
+      parameters:
+        - name: org-id
+          in: path
+          description: Идентификатор организации
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Данные пользователя
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  enum:
+                    - admin
+                    - user
+                phone:
+                  type: string
+                id:
+                  type: string
+                  format: uuid
+      responses:
+        200:
+          description: Регистрация пользователя успешна
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                  profile:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      phone:
+                        type: string
+                      id:
+                        type: string
+                        format: uuid
+        404:
+          $ref: "#/components/responses/404Error"
+
+  /user/{user-id}/change-password:
+    post:
+      tags:
+        - User
+      summary: Изменение пароля
+      parameters:
+        - name: user-id
+          in: query
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Данные пользователя
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oldPassword:
+                  type: string
+                newPassword:
+                  type: string
+      responses:
+        200:
+          description: Пароль успешно изменен
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Сообщение об успешном изменении пароля
+                    example: "Пароль успешно изменен"
+        404:
+          $ref: "#/components/responses/404Error"
+
+  /user/refresh-token:
+    post:
+      tags:
+        - User
+      summary: Обновление токенов
+      requestBody:
+        description: Данные элемента страницы
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                refreshToken:
+                  type: string
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+        404:
+          $ref: "#/components/responses/404Error"
+
+  /org/{org-id}/items/in-use:
+    get:
+      tags:
+        - Item
+      summary: Предметы в использовании
+      parameters:
+        - name: org-id
+          in: path
+          description: Идентификатор организации
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+        404:
+          $ref: "#/components/responses/404Error"
+  /org/{org-id}/branches:
+    get:
+      tags:
+        - Branch
+      summary: Ветки организации
+      parameters:
+        - name: org-id
+          in: path
+          description: Идентификатор организации
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Branch"
+        404:
+          $ref: "#/components/responses/404Error"
+    post:
+      tags:
+        - Branch
+      summary: Создание склада
+      parameters:
+        - name: org-id
+          in: path
+          description: Идентификатор организации
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Данные элемента страницы
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveBranch"
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          $ref: "#/components/responses/404Error"
+
+  /org/{org-id}/items:
+    post:
+      tags:
+        - Item
+      summary: Создание предмета
+      parameters:
+        - name: org-id
+          in: path
+          description: Идентификатор организации
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Данные элемента страницы
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveItem"
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          $ref: "#/components/responses/404Error"
+  /org/{org-id}/items/search:
+    get:
+      tags:
+        - Item
+      summary: Поиск предметов
+      parameters:
+        - name: org-id
+          in: path
+          description: Идентификатор организации
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: name
+          in: query
+          description: значение для поиска
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+        404:
+          $ref: "#/components/responses/404Error"
+  /org/{org-id}/branches/search:
+    get:
+      tags:
+        - Branch
+      summary: Поиск хранилищ
+      parameters:
+        - name: org-id
+          in: path
+          description: Идентификатор организации
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: name
+          in: query
+          description: значение для поиска
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Branch"
+        404:
+          $ref: "#/components/responses/404Error"
+  /user/{user-id}/intems/{item-id}/take:
+    post:
+      tags:
+        - Item
+      summary: Взять предмет
+      parameters:
+        - name: user-id
+          in: path
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: item-id
+          in: query
+          description: Идентификатор предмета
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Данные для репорта
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isBroken:
+                  type: boolean
+                comment:
+                  type: string
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          $ref: "#/components/responses/404Error"
+  /user/{user-id}/intems/{item-id}/return:
+    post:
+      tags:
+        - Item
+      summary: Вернуть предмет
+      parameters:
+        - name: user-id
+          in: path
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: item-id
+          in: query
+          description: Идентификатор предмета
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: Данные для репорта
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isBroken:
+                  type: boolean
+                comment:
+                  type: string
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          $ref: "#/components/responses/404Error"
+  /items/{item-id}/reports:
+    get:
+      tags:
+        - Report
+      summary: Отчеты по предмету
+      parameters:
+        - name: item-id
+          in: path
+          description: Идентификатор предмета
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Report"
+        404:
+          $ref: "#/components/responses/404Error"
+  /categories:
+    post:
+      tags:
+        - Category
+      summary: Создание категории
+      requestBody:
+        description: Данные элемента страницы
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  $ref: "#/components/schemas/SaveCategory"
+                confId:
+                  type: integer
+                  format: int32
+              required:
+                - category
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          $ref: "#/components/responses/404Error"
+  /configurations:
+    post:
+      tags:
+        - Configuration
+      summary: Создание конфигурации
+      requestBody:
+        description: Данные элемента страницы
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveConfiguration"
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        404:
+          $ref: "#/components/responses/404Error"
+  /categories/{category-id}/conf:
+    get:
+      tags:
+        - Configuration
+      summary: Конфигурации категории
+      parameters:
+        - name: category-id
+          in: path
+          description: Идентификатор категории
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Метод успешно отработал
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Configuration"
+#  /org/{org-id}/branches/
+
+components:
+  parameters:
+
+    configurationCode:
+      name: configuration-code
+      in: path
+      description: Код конфигурации
+      required: true
+      schema:
+        $ref: "#/components/schemas/Sluggable"
+
+    optionsCodes:
+      name: optionsCodes
+      in: query
+      description: Коды настроек конфигураций
+      required: false
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/Sluggable"
+        uniqueItems: true
+
+    formCode:
+      name: form-code
+      in: path
+      description: Код формы
+      required: true
+      schema:
+        $ref: "#/components/schemas/Sluggable"
+
+    contentPageCode:
+      name: content-page-code
+      in: path
+      description: Код контентной страницы
+      required: true
+      schema:
+        $ref: "#/components/schemas/Sluggable"
+
+    allowInactive:
+      name: allowInactive
+      in: query
+      description: Позволить получение неактивной страницы
+      schema:
+        type: boolean
+
+    menuCode:
+      name: menu-code
+      in: path
+      description: Код меню
+      required: true
+      schema:
+        $ref: "#/components/schemas/Sluggable"
+
+  schemas:
+
+    # ------- start orga ------
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        phone:
+          type: string
+        inn:
+          type: string
+      required:
+        - id
+        - name
+        - phone
+        - inn
+    SaveOrganization:
+      type: object
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        inn:
+          type: string
+      required:
+        - name
+        - phone
+        - inn
+    # ------- end orga ------
+
+    # ------- start branch ------
+
+    Branch:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        organizationId:
+          type: integer
+          format: int32
+        address:
+          type: integer
+        lat:
+          type: string
+        lon:
+          type: string
+      required:
+        - id
+        - name
+        - organizationId
+        - address
+        - lat
+        - lon
+
+    SaveBranch:
+      type: object
+      properties:
+        name:
+          type: string
+        organizationId:
+          type: integer
+          format: int32
+        address:
+          type: integer
+        lat:
+          type: string
+        lon:
+          type: string
+      required:
+        - name
+        - organizationId
+        - address
+        - lat
+        - lon
+
+    # ------- end branch ------
+
+    # ------- start user ------
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+          enum:
+            - stuff
+            - user
+        organizationId:
+          type: integer
+          format: int32
+      required:
+        - id
+        - phone
+        - role
+
+    SaveUser:
+      type: object
+      properties:
+        phone:
+          type: string
+        role:
+          type: string
+          enum:
+            - stuff
+            - user
+      required:
+        - phone
+        - role
+
+    # ------- end user ------
+
+    #------- start storage -----
+    Storage:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        storages:
+          type: array
+          items:
+            $ref: "#/components/schemas/Storage"
+        branch:
+          $ref: "#/components/schemas/Branch"
+        capacity:
+          type: integer
+          format: int32
+        address:
+          type: string
+        frame:
+          type: integer
+          format: int32
+      required:
+        - id
+        - name
+        - branchId
+        - capacity
+        - address
+        - frame
+
+    SaveStorage:
+      type: object
+      properties:
+        name:
+          type: string
+        parentStorageId:
+          type: integer
+          format: int32
+        branchId:
+          type: integer
+          format: int32
+        capacity:
+          type: integer
+          format: int32
+        address:
+          type: string
+        frame:
+          type: integer
+          format: int32
+      required:
+        - name
+        - branchId
+    #------- end storage -----
+
+    # ------ start items -----
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        photoLink:
+          type: string
+        category:
+          type: string
+        storage:
+          $ref: "#/components/schemas/Storage"
+        user:
+          $ref: "#/components/schemas/User"
+        comment:
+          type: string
+        status:
+          type: string
+        branch:
+          $ref: "#/components/schemas/Branch"
+        qrImg:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
+      required:
+        - id
+        - name
+        - status
+        - branchesId
+
+    SaveItem:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        photoLink:
+          type: string
+        category:
+          type: string
+        storageId:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        comment:
+          type: string
+        status:
+          type: string
+        branchId:
+          type: integer
+          format: int32
+        qrImg:
+          type: string
+        categoryIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+      required:
+        - name
+        - status
+        - status
+    # ------ end user -----
+
+    # ------- start conf -----
+    Configuration:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        code:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - code
+        - name
+
+    SaveConfiguration:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: "#/components/schemas/Option"
+      required:
+        - code
+        - name
+
+    # ------- end conf -----
+
+    # ------ start options ------
+
+    Option:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        code:
+          type: string
+        type:
+          type: string
+        value:
+          type: string
+      required:
+        - id
+        - name
+        - code
+        - type
+        - value
+        - confId
+
+    SaveOption:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        type:
+          type: string
+        value:
+          type: string
+        confId:
+          type: integer
+          format: int32
+      required:
+        - name
+        - code
+        - type
+        - value
+        - confId
+
+    # ------ end options ------
+
+    # ------ start reports ----
+    Report:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        text:
+          type: string
+        createdAt:
+          type: string
+          format: date
+        newStatus:
+          type: string
+        item:
+          $ref: "#/components/schemas/Item"
+        user:
+          $ref: "#/components/schemas/User"
+        actions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Action"
+        closedAt:
+          type: string
+          format: date
+      required:
+        - id
+        - text
+        - createdAt
+        - newStatus
+        - item
+        - user
+
+    SaveReport:
+      type: object
+      properties:
+        text:
+          type: string
+        newStatus:
+          type: string
+        itemId:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+      required:
+        - text
+        - newStatus
+        - itemId
+        - userId
+
+    # ------ end reports ----
+
+    # ------ start action ----
+
+    Action:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        description:
+          type: string
+        report:
+          $ref: "#/components/schemas/Report"
+        date:
+          type: string
+          format: date
+      required:
+        - id
+        - name
+        - report
+        - date
+
+    SaveAction:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        reportId:
+          type: integer
+          format: int32
+      required:
+        - name
+        - description
+        - reportId
+
+    # ------ end action ----
+
+    # ------ start category ------
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/Category"
+        conf:
+          $ref: "#/components/schemas/Configuration"
+      required:
+        - id
+        - name
+        - parentCategoryId
+
+    SaveCategory:
+      type: object
+      properties:
+        name:
+          type: string
+        parentCategoryId:
+          type: integer
+          format: int32
+        confId:
+          type: integer
+          format: int32
+      required:
+        - name
+        - parentCategoryId
+
+    Sluggable:
+      type: string
+      pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$'
+      description: Код элемента, отображаемый в uri
+      example: 'sluggable-code'
+
+    Uri:
+      type: string
+      pattern: '^(/[a-z0-9]+(?:-[a-z0-9]+)*)*$'
+      description: Код элемента, отображаемый в uri
+      example: '/uri'
+
+    runtimeError:
+      title: Объект ошибки
+      type: object
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        debug:
+          type: string
+
+    form_v1FormResultValue:
+      type: object
+      properties:
+        formFieldCode:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+    Uuid:
+      description: uuid
+      type: string
+      format: uuid
+      example: 11111111-1111-1111-1111-111111111111
+
+    Error:
+      required:
+        - applicationErrorCode
+        - message
+      type: object
+      properties:
+        applicationErrorCode:
+          type: string
+          description: |
+            Код ошибки, к которому привел вызов метода
+          example: tooManyRequests
+        message:
+          type: string
+          description: |
+            Человекочитаемое сообщение об ошибке
+          example: Ошибка отправки СМС-сообщения
+        debug:
+          type: string
+          description: |
+            Дополнительная отладочная информация
+          example: 'org.postgresql.util.PSQLException: ERROR: canceling statement
+            due to user request'
+      description: Описание ошибки для всех методов
+
+  responses:
+    400Error:
+      description: Ошибочный запрос, например, отсутствует один из параметров
+      content:
+        application/json:
+          example:
+            applicationErrorCode: "Not Found"
+            message: "Элемент не найден."
+            debug: "some element not found"
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    404Error:
+      description: Запрашиваемый ресурс не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    409Error:
+      description: Ресурс, создаваемый методом POST, уже существует
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    500Error:
+      description: Серверная ошибка
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

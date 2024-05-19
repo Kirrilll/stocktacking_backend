@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Storage 1",
+    "parent_storage_id": null,
+    "branch_id": 1,
+    "capacity": 100,
+    "address": "Address 1",
+    "frame": 1
+  },
+  {
+    "id": 2,
+    "name": "Storage 2",
+    "parent_storage_id": 1,
+    "branch_id": 2,
+    "capacity": 50,
+    "address": "Address 2",
+    "frame": 2
+  },
+  {
+    "id": 3,
+    "name": "Storage 3",
+    "parent_storage_id": null,
+    "branch_id": 3,
+    "capacity": 75,
+    "address": "Address 3",
+    "frame": 3
+  },
+  {
+    "id": 4,
+    "name": "Storage 4",
+    "parent_storage_id": 3,
+    "branch_id": 4,
+    "capacity": 25,
+    "address": "Address 4",
+    "frame": 4
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "text": "Report 1",
+    "created_at": "2022-01-01",
+    "new_status": "Active",
+    "item_id": 1,
+    "user_id": 1,
+    "closed_at": "2022-01-02"
+  },
+  {
+    "id": 2,
+    "text": "Report 2",
+    "created_at": "2022-01-03",
+    "new_status": "Inactive",
+    "item_id": 2,
+    "user_id": 2,
+    "closed_at": null
+  },
+  {
+    "id": 3,
+    "text": "Report 3",
+    "created_at": "2022-01-05",
+    "new_status": "Active",
+    "item_id": 3,
+    "user_id": 3,
+    "closed_at": "2022-01-06"
+  },
+  {
+    "id": 4,
+    "text": "Report 4",
+    "created_at": "2022-01-07",
+    "new_status": "Inactive",
+    "item_id": 4,
+    "user_id": 4,
+    "closed_at": null
+  }
+]

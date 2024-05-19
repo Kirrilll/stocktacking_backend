@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Action 1",
+    "description": "Description 1",
+    "report_id": 1,
+    "date": "2022-01-02"
+  },
+  {
+    "id": 2,
+    "name": "Action 2",
+    "description": "Description 2",
+    "report_id": 2,
+    "date": "2022-01-04"
+  },
+  {
+    "id": 3,
+    "name": "Action 3",
+    "description": "Description 3",
+    "report_id": 3,
+    "date": "2022-01-06"
+  },
+  {
+    "id": 4,
+    "name": "Action 4",
+    "description": "Description 4",
+    "report_id": 4,
+    "date": "2022-01-08"
+  }
+]
